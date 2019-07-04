@@ -5,6 +5,7 @@ public class Kata {
 
     public static void main(String[] args) {
         System.out.println(grow(new int[]{4, 1, 1, 1, 4}));
+        System.out.println("game over \n start to");
     }
 
     public static int grow(int[] x) {
