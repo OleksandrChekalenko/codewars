@@ -1,3 +1,13 @@
+import java.util.Arrays;
+
+class Kata {
+    static String findNeedle(Object[] haystack) {
+        return "found the needle at position " + Arrays.asList(haystack).indexOf("needle");
+    }
+}
+
+/*
+//Java 1.7
 class Kata {
 
     static String findNeedle(Object[] haystack) {
@@ -8,4 +18,4 @@ class Kata {
         }
         return "";
     }
-}
+}*/
