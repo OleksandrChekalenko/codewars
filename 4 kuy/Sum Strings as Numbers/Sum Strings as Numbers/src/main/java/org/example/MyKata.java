@@ -1,6 +1,9 @@
 package org.example;
 
 public class MyKata {
+
+    private MyKata() {}
+
     public static String sumStrings(String a, String b) {
         if (a.isBlank() && b.isBlank())
             return "";
@@ -37,7 +40,6 @@ public class MyKata {
                 result.append(workingArray[i]);
             }
         }
-
         return result.toString();
     }
 
