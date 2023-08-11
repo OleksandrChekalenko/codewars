@@ -15,16 +15,16 @@ public class Interval {
     public static int sumIntervals(int[][] intervals) {
         if (intervals.length == 0)
             return 0;
-
-        List<int[]> coveredIntervals = Arrays.stream(intervals).toList();
-        List<int[]> mod = new ArrayList<>(coveredIntervals);
-
+        int[] master, slave;
+        int x, y;
+        List<int[]> mod = new ArrayList<>(Arrays.stream(intervals).toList());
         for (int i = 0; i < mod.size(); i++) {
             for (int j = 1; j < mod.size(); j++) {
-                if (i != j && mod.get(i)[0] < mod.get(j)[1]
-                        && mod.get(j)[0] < mod.get(i)[1]) {
-                    int x = Math.min(mod.get(i)[0], mod.get(j)[0]);
-                    int y = Math.max(mod.get(i)[1], mod.get(j)[1]);
+                master = mod.get(i);
+                slave = mod.get(j);
+                if (i != j && master[0] < slave[1] && slave[0] < master[1]) {
+                    x = Math.min(master[0], slave[0]);
+                    y = Math.max(master[1], slave[1]);
 
                     mod.add(new int[]{x, y});
                     mod.remove(i);
@@ -38,7 +38,7 @@ public class Interval {
         return mod.stream().map(i -> i[1] - i[0]).reduce(0, Integer::sum);
     }
 
-    public static int sumIntervals2(int[][] intervals) {
+    public static int sumIntervals5(int[][] intervals) {
         return (int) of(requireNonNullElse(intervals, new int[0][])).flatMapToInt(i -> range(i[0], i[1])).distinct().count();
     }
 
@@ -56,5 +56,40 @@ public class Interval {
         }
 
         return numbers.size();
+    }
+
+    public static int sumIntervals2(int[][] intervals) {
+        return (int) of(requireNonNullElse(intervals, new int[0][])).flatMapToInt(i -> range(i[0], i[1])).distinct().count();
+    }
+
+    //Heap exception
+    public static int sumIntervalsVer(int[][] intervals) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        for (int[] ints : intervals) {
+            for (int anInt : ints) {
+                min = Math.min(min, anInt);
+                max = Math.max(max, anInt);
+            }
+        }
+
+        int[] resArr = new int[max - min + 1];
+
+        for (int[] interval : intervals) {
+            int left = interval[0];
+            int right = interval[1];
+
+            for (int i = left; i < right; i++) {
+                resArr[i - min] = 1;
+            }
+        }
+
+        int res = 0;
+        for (int j : resArr) {
+            res += j;
+        }
+
+        return res;
     }
 }
